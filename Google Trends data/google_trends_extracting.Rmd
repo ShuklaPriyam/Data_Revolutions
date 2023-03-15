@@ -1,0 +1,48 @@
+---
+title: "Scraping Google Trends"
+author: "Priyam Shukla"
+date: "2023-03-02"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(purrr)
+library(gtrendsR)
+library(dplyr)
+library(readxl)
+```
+
+```{r}
+iso_codes <- read.csv("E:\\R learnings\\iso.csv")
+
+protest_US <- gtrends("protest", geo = "BG", time = "all")
+protest_US <- 
+  protest_US[["interest_over_time"]]
+protest_US <- protest_US[0,]
+for (x in iso_codes$alpha.2) {
+  tryCatch({
+    protest_trend <- gtrends("protest", geo = x, time = "all")
+    custom_protest <- protest_trend[["interest_over_time"]]
+    protest_US <- rbind(protest_US, custom_protest)
+  }, error = function(e) {
+    cat(paste("Error for", x, ":", e$message, "\n"))
+  })
+}
+
+#AX_test <- gtrends("protest", geo = "AX", time = "all")
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
